@@ -7,7 +7,7 @@ docname: draft-iqbal-rosomakho-ai-security-events-latest
 category: info
 ipr: trust200902
 submissiontype: IETF
-area: Security
+# area: Security
 stand_alone: yes
 keyword:
   - AI
@@ -171,7 +171,7 @@ Discovery events identify the presence of AI agent infrastructure components reg
 
 Event Types:
 * agent_discovered: AI client or agent detected
-* server_discovered: Tool server endpoint identified  
+* server_discovered: Tool server endpoint identified
 * gateway_discovered: Consolidation layer detected
 
 Discovery events MUST include: component_type, protocol_indicators, detection_method, confidence_score
