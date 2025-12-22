@@ -3,7 +3,7 @@ coding: utf-8
 
 title: "Security Event Framework for AI Systems"
 abbrev: "AI Security Events"
-docname: draft-iqbal-rosomakho-ai-security-events-00
+docname: draft-iqbal-rosomakho-ai-security-events-latest
 category: info
 ipr: trust200902
 submissiontype: IETF
