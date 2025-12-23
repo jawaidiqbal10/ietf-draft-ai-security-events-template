@@ -6,17 +6,14 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>Security Event Framework for AI Systems</title>
 <meta content="Jawaid Iqbal" name="author">
-<meta content="Yaroslav Rosomakho" name="author">
 <meta content="
-       This specification defines a comprehensive security event framework for monitoring AI agent systems, including agentic AI workflows, autonomous agent architectures, and tool-calling protocols. While motivated by the Model Context Protocol (MCP), the framework applies broadly to any AI system exhibiting agent-like behaviors, addressing critical gaps in traditional security monitoring through standardized event taxonomies, correlation schemas, and detection approaches specifically designed for AI-mediated data access and semantic transformation. The specification defines five security event categories: Discovery, Risk Assessment, Data Access, Policy Enforcement, and Semantic Data Lineage. Event schemas are designed as a domain-specific profile that complements existing security event standards (CEF, LEEF, OCSF) rather than replacing them, enabling integration with existing SIEM infrastructure while providing AI-specific semantics. The framework is protocol-agnostic, supporting multiple AI agent frameworks including the Model Context Protocol (MCP), LangChain, and others. It explicitly addresses diverse deployment patterns including direct client-server, gateway consolidation, embedded AI, autonomous agents, and multi-agent orchestration. 
+       This document describes a comprehensive security event framework for monitoring AI agent systems, including agentic AI workflows, autonomous agent architectures, and tool-calling protocols.  While motivated by the Model Context Protocol (MCP), the framework applies broadly to any AI system exhibiting agent-like behaviors, addressing critical gaps in traditional security monitoring through standardized event taxonomies, correlation schemas, and detection approaches specifically designed for AI-mediated data access and semantic transformation.  The document describes five security event categories: Discovery, Risk Assessment, Data Access, Policy Enforcement, and Semantic Data Lineage.  Event schemas are designed as a domain-specific profile that complements existing security event standards (CEF, LEEF, OCSF) rather than replacing them, enabling integration with existing SIEM infrastructure while providing AI-specific semantics.  The framework is protocol-agnostic, supporting multiple AI agent frameworks including the Model Context Protocol (MCP), LangChain, and others.  It explicitly addresses diverse deployment patterns including direct client-server, gateway consolidation, embedded AI, autonomous agents, and multi-agent orchestration.  This document provides a taxonomy and event semantics for AI agent systems; it does not prescribe enforcement mechanisms or operational controls. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
-<meta content="AI" name="keyword">
-<meta content="Security Events" name="keyword">
-<meta content="Telemetry" name="keyword">
-<meta content="Logging" name="keyword">
-<meta content="AI Agents" name="keyword">
-<meta content="draft-iqbal-rosomakho-ai-security-events-latest" name="ietf.draft">
+<meta content="AI security" name="keyword">
+<meta content="MCP" name="keyword">
+<meta content="data loss prevention" name="keyword">
+<meta content="draft-iqbal-ai-security-events-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.31.0
     Python 3.12.12
@@ -31,7 +28,7 @@
     requests 2.32.5
     wcwidth 0.2.14
 -->
-<link href="draft-iqbal-rosomakho-ai-security-events.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-iqbal-ai-security-events.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1051,7 +1048,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">December 2025</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Iqbal &amp; Rosomakho</td>
+<td class="left">Iqbal</td>
 <td class="center">Expires 25 June 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1062,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-iqbal-rosomakho-ai-security-events-latest</dd>
+<dd class="internet-draft">draft-iqbal-ai-security-events-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2025-12-22" class="published">22 December 2025</time>
@@ -1071,15 +1068,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-06-25">25 June 2026</time></dd>
-<dt class="label-authors">Authors:</dt>
+<dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
       <div class="author-name">J. Iqbal, <span class="editor">Ed.</span>
-</div>
-<div class="org">Zscaler</div>
-</div>
-<div class="author">
-      <div class="author-name">Y. Rosomakho, <span class="editor">Ed.</span>
 </div>
 <div class="org">Zscaler</div>
 </div>
@@ -1089,15 +1081,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Security Event Framework for AI Systems</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This specification defines a comprehensive security event framework for monitoring AI agent systems, including agentic AI workflows, autonomous agent architectures, and tool-calling protocols. While motivated by the Model Context Protocol (MCP), the framework applies broadly to any AI system exhibiting agent-like behaviors, addressing critical gaps in traditional security monitoring through standardized event taxonomies, correlation schemas, and detection approaches specifically designed for AI-mediated data access and semantic transformation. The specification defines five security event categories: Discovery, Risk Assessment, Data Access, Policy Enforcement, and Semantic Data Lineage. Event schemas are designed as a domain-specific profile that complements existing security event standards (CEF, LEEF, OCSF) rather than replacing them, enabling integration with existing SIEM infrastructure while providing AI-specific semantics. The framework is protocol-agnostic, supporting multiple AI agent frameworks including the Model Context Protocol (MCP), LangChain, and others. It explicitly addresses diverse deployment patterns including direct client-server, gateway consolidation, embedded AI, autonomous agents, and multi-agent orchestration.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document describes a comprehensive security event framework for monitoring AI agent systems, including agentic AI workflows, autonomous agent architectures, and tool-calling protocols.  While motivated by the Model Context Protocol (MCP), the framework applies broadly to any AI system exhibiting agent-like behaviors, addressing critical gaps in traditional security monitoring through standardized event taxonomies, correlation schemas, and detection approaches specifically designed for AI-mediated data access and semantic transformation.  The document describes five security event categories: Discovery, Risk Assessment, Data Access, Policy Enforcement, and Semantic Data Lineage.  Event schemas are designed as a domain-specific profile that complements existing security event standards (CEF, LEEF, OCSF) rather than replacing them, enabling integration with existing SIEM infrastructure while providing AI-specific semantics.  The framework is protocol-agnostic, supporting multiple AI agent frameworks including the Model Context Protocol (MCP), LangChain, and others.  It explicitly addresses diverse deployment patterns including direct client-server, gateway consolidation, embedded AI, autonomous agents, and multi-agent orchestration.  This document provides a taxonomy and event semantics for AI agent systems; it does not prescribe enforcement mechanisms or operational controls.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
-      <h2 id="name-discussion-venues">
-<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      <h2 id="name-about-this-document">
+<a href="#name-about-this-document" class="section-name selfRef">About This Document</a>
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
-<p id="section-note.1-2">Source for this draft and an issue tracker can be found at
-    <span><a href="https://github.com/jawaidiqbal10/ietf-draft-ai-security-events-template">https://github.com/jawaidiqbal10/ietf-draft-ai-security-events-template</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-iqbal-ai-security-events/">https://datatracker.ietf.org/doc/draft-iqbal-ai-security-events/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1296,7 +1288,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.9.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-detection-results-summary" class="internal xref">Detection Results Summary</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-B.3" class="auto internal xref">B.3</a>.  <a href="#name-shadow-mcp-client-signature" class="internal xref">Shadow MCP Client Signature Evidence</a></p>
+                <p id="section-toc.1-1.9.2.3.1"><a href="#appendix-B.3" class="auto internal xref">B.3</a>.  <a href="#name-unmanaged-mcp-client-signat" class="internal xref">Unmanaged MCP Client Signature Evidence</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
                 <p id="section-toc.1-1.9.2.4.1"><a href="#appendix-B.4" class="auto internal xref">B.4</a>.  <a href="#name-semantic-data-exposure-evid" class="internal xref">Semantic Data Exposure Evidence</a></p>
@@ -1316,7 +1308,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgements" class="internal xref">Acknowledgements</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1332,8 +1327,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-problem-statement">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-problem-statement" class="section-name selfRef">Problem Statement</a>
         </h3>
-<p id="section-1.1-1">AI agent systems introduce autonomous capabilities that transcend traditional security monitoring approaches. These systems invoke tools to access enterprise data, transform information semantically through large language model processing, maintain conversational context across sessions, and operate through protocols designed for functionality rather than security observability.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">Existing security frameworks generate events based on file movement, network traffic patterns, and process execution. These approaches fail to detect AI-mediated data exfiltration where:<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">AI agent systems introduce autonomous capabilities that transcend traditional security monitoring approaches.  These systems invoke tools to access enterprise data, transform information semantically through large language model processing, maintain conversational context across sessions, and operate through protocols designed for functionality rather than security observability.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Existing security frameworks generate events based on file movement, network traffic patterns, and process execution.  These approaches fail to detect AI-mediated data exfiltration where:<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-3.1">
             <p id="section-1.1-3.1.1">Sensitive data is compressed semantically (500KB document to 2KB summary)<a href="#section-1.1-3.1.1" class="pilcrow">¶</a></p>
@@ -1348,7 +1343,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-1.1-3.4.1">Context persists across sessions without explicit data transfer<a href="#section-1.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.1-4">This specification provides a domain-specific event taxonomy for AI agent systems that complements existing security event standards (CEF, LEEF, OCSF) by adding AI-specific semantics while maintaining interoperability with existing SIEM infrastructure. Rather than replacing existing standards, this framework extends them to address unique AI agent security requirements.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">This document provides a domain-specific event taxonomy for AI agent systems that complements existing security event standards (CEF, LEEF, OCSF) by adding AI-specific semantics while maintaining interoperability with existing SIEM infrastructure.  Rather than replacing existing standards, this framework extends them to address unique AI agent security requirements.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="critical-security-gaps">
@@ -1357,10 +1352,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-critical-security-gaps" class="section-name selfRef">Critical Security Gaps</a>
         </h3>
 <p id="section-1.2-1">Analysis of production AI agent deployments has identified four critical architectural gaps in traditional security systems:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">Gap 1: Visibility Gap. AI capabilities embedded within trusted domains bypass inspection. Production evidence indicates 30-40% of AI traffic operates within trusted application contexts, creating significant blind spots in security monitoring.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">Gap 2: The Decoupled Transaction Gap. Traditional security logging assumes a synchronous, 1:1 relationship between a network session and a data transfer (e.g., a single POST request containing a file). However, modern AI agent architectures frequently utilize split-transaction data transfer workflows to optimize latency and scale. In these workflows, the client first negotiates an upload via a metadata-only API call (transmitting filename, size, and user context), receiving a pre-signed URL or storage token in response. The actual binary payload is subsequently transmitted to a distinct storage endpoint (often a different domain or CDN) in a separate, unauthenticated HTTP session. Standard logging treats these as two unrelated events, resulting in "orphan" data transfers where binary content cannot be attributed to the initiating user, session, or policy context.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">Gap 3: Governance Gap. Unauthorized AI infrastructure including shadow servers, gateways, and agents operates without security oversight, creating unmanaged pathways for data access.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
-<p id="section-1.2-5">Gap 4: Persistence Gap. Data converted to vector embeddings becomes unscannable by traditional DLP systems while retaining complete semantic meaning, enabling covert data persistence.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">Gap 1: Visibility Gap. AI capabilities embedded within trusted domains operate outside inspection boundaries.  Production evidence from analyzed deployments indicates 30-40% of observed AI traffic operates within trusted application contexts, creating significant blind spots in security monitoring.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">Gap 2: The Decoupled Transaction Gap. Traditional security logging assumes a synchronous, 1:1 relationship between a network session and a data transfer (e.g., a single POST request containing a file). AI agent interactions frequently split data transfer across multiple HTTP transactions, temporal boundaries, and semantic transformations. This violates fundamental assumptions in DLP and CASB architectures designed around atomic file operations.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">Gap 3: Semantic Transformation Gap. Traditional data loss prevention systems operate on pattern matching, file signatures, and data fingerprinting - techniques effective for detecting verbatim file copies.  AI agents fundamentally transform data semantically: a 500KB confidential document becomes a 2KB summary that contains the same sensitive insights but matches zero DLP signatures.  In analyzed production traffic, traditional DLP systems achieved 0% detection of AI-mediated semantic data exposure while maintaining 95%+ accuracy for traditional file transfers.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Gap 4: Protocol Opacity Gap. The Model Context Protocol and similar agent frameworks operate as stateful, bidirectional communication channels.  Tool invocations, resource access, and data retrieval occur within encrypted sessions that expose minimal metadata. Traditional network security tools lack semantic awareness of MCP operations, treating agent traffic as generic HTTPS sessions.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="motivating-use-cases">
@@ -1368,11 +1363,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-motivating-use-cases">
 <a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-motivating-use-cases" class="section-name selfRef">Motivating Use Cases</a>
         </h3>
-<p id="section-1.3-1">This event taxonomy enables SOC teams to address concrete security scenarios:<a href="#section-1.3-1" class="pilcrow">¶</a></p>
-<p id="section-1.3-2">Use Case 1: Shadow AI Detection. Discover unauthorized AI agents, servers, and gateways operating on corporate networks through Discovery and Risk events, enabling governance and compliance enforcement.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
-<p id="section-1.3-3">Use Case 2: Data Exfiltration Detection. Correlate Data Access and Semantic Lineage events to identify when confidential data is summarized and sent to unauthorized destinations, detecting exfiltration that bypasses traditional DLP.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
-<p id="section-1.3-4">Use Case 3: Policy Compliance. Monitor Policy Enforcement events to ensure AI agents respect data classification policies, rate limits, and access controls, generating compliance audit trails for regulatory requirements.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
-<p id="section-1.3-5">Use Case 4: Cross-Border Regulatory Exposure. Correlate network context and regulatory flags in Data Access events to identify when sensitive data crosses jurisdictional boundaries through AI agent operations, enabling GDPR, data residency, and export control compliance monitoring.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
+<p id="section-1.3-1">This framework addresses observable security requirements in enterprise AI deployments:<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">Use Case 1: Unmanaged AI Client Discovery. An AI-enabled code editor operates outside formal governance, accessing production databases through tool invocations.  Security teams require visibility into such unmanaged AI clients that operate outside formal AI governance frameworks.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">Use Case 2: Cross-Session Data Correlation. An AI agent aggregates customer data across multiple tool calls spanning three days, then generates a comprehensive analysis.  Each individual tool call accesses non-sensitive data, but the aggregate reveals confidential business intelligence.  Traditional monitoring sees isolated, benign queries rather than systematic data exfiltration.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<p id="section-1.3-4">Use Case 3: Semantic Data Exposure. A user uploads a 45-page M&amp;A term sheet to an AI service, receives strategic advice, then shares the AI-generated summary externally.  The summary contains no original document text but exposes deal structure, valuation multiples, and negotiation strategy.  File-based DLP systems detect neither the upload (encrypted API call) nor the exposure (novel text, no fingerprint match).<a href="#section-1.3-4" class="pilcrow">¶</a></p>
+<p id="section-1.3-5">Use Case 4: Multi-Agent Orchestration Risk. An autonomous agent framework coordinates three specialized agents: one accesses financial data, another retrieves customer contracts, and a third generates forecasts.  The orchestration layer combines outputs to produce insights that violate data segregation policies.  Traditional monitoring sees three independent, policy-compliant transactions rather than a coordinated data aggregation operation.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="scope-and-applicability">
@@ -1380,22 +1375,51 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-scope-and-applicability">
 <a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-scope-and-applicability" class="section-name selfRef">Scope and Applicability</a>
         </h3>
-<p id="section-1.4-1">This framework applies to:<a href="#section-1.4-1" class="pilcrow">¶</a></p>
+<p id="section-1.4-1">This document describes an event taxonomy and correlation framework. It does not prescribe:<a href="#section-1.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.4-2.1">
-            <p id="section-1.4-2.1.1">AI agent protocols: Model Context Protocol, LangChain, AutoGPT, OpenAI Assistants API, and custom implementations<a href="#section-1.4-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-1.4-2.1.1">Specific enforcement mechanisms or operational controls<a href="#section-1.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.4-2.2">
-            <p id="section-1.4-2.2.1">Tool-calling systems: Agents that invoke functions, tools, or plugins to access data<a href="#section-1.4-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-1.4-2.2.1">Required detection thresholds or sensitivity levels<a href="#section-1.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.4-2.3">
-            <p id="section-1.4-2.3.1">Deployment patterns: Direct connections, gateway consolidation, embedded AI, autonomous agents, and multi-agent orchestration<a href="#section-1.4-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-1.4-2.3.1">Mandatory implementation architectures<a href="#section-1.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.4-2.4">
-            <p id="section-1.4-2.4.1">Environment types: Browser extensions, desktop applications, cloud services, edge devices, and containerized infrastructure<a href="#section-1.4-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-1.4-2.4.1">Compliance or regulatory interpretations<a href="#section-1.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-1.4-3">This specification does not cover general AI model training security, prompt injection detection, or AI output quality monitoring, which are addressed in separate standards. These domains MAY consume the event taxonomy defined here as input signals but are otherwise out of scope.<a href="#section-1.4-3" class="pilcrow">¶</a></p>
+<p id="section-1.4-3">The framework applies to environments where:<a href="#section-1.4-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.4-4.1">
+            <p id="section-1.4-4.1.1">AI agents access enterprise data through tool invocations<a href="#section-1.4-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-4.2">
+            <p id="section-1.4-4.2.1">Organizations require audit trails for AI-mediated data access<a href="#section-1.4-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-4.3">
+            <p id="section-1.4-4.3.1">Security teams need correlation across AI transactions<a href="#section-1.4-4.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-4.4">
+            <p id="section-1.4-4.4.1">Existing SIEM infrastructure requires AI-specific event context<a href="#section-1.4-4.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.4-5">The framework explicitly does not address:<a href="#section-1.4-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.4-6.1">
+            <p id="section-1.4-6.1.1">AI model training data governance<a href="#section-1.4-6.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-6.2">
+            <p id="section-1.4-6.2.1">Inference-time prompt injection attacks<a href="#section-1.4-6.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-6.3">
+            <p id="section-1.4-6.3.1">AI system availability or performance monitoring<a href="#section-1.4-6.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.4-6.4">
+            <p id="section-1.4-6.4.1">General application security logging<a href="#section-1.4-6.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="requirements-language">
@@ -1403,7 +1427,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-requirements-language">
 <a href="#section-1.5" class="section-number selfRef">1.5. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
         </h3>
-<p id="section-1.5-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> and RFC 8174 <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">¶</a></p>
+<p id="section-1.5-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
+described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
+appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1411,13 +1438,33 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-terminology">
 <a href="#section-1.6" class="section-number selfRef">1.6. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
         </h3>
-<p id="section-1.6-1">This specification uses the following terms:<a href="#section-1.6-1" class="pilcrow">¶</a></p>
-<p id="section-1.6-2">AI Agent: An autonomous system that uses foundation models to reason, make decisions, and invoke tools to accomplish objectives.<a href="#section-1.6-2" class="pilcrow">¶</a></p>
-<p id="section-1.6-3">Tool: A capability exposed to an AI agent for accessing resources (file access, API calls, database queries).<a href="#section-1.6-3" class="pilcrow">¶</a></p>
-<p id="section-1.6-4">Gateway: An intermediary layer consolidating multiple backend servers behind a unified endpoint.<a href="#section-1.6-4" class="pilcrow">¶</a></p>
-<p id="section-1.6-5">Semantic transformation: AI model processing that changes data representation while preserving meaning.<a href="#section-1.6-5" class="pilcrow">¶</a></p>
-<p id="section-1.6-6">Semantic lineage: Tracking how sensitive meaning propagates across AI transformations.<a href="#section-1.6-6" class="pilcrow">¶</a></p>
-<p id="section-1.6-7">Shadow deployment: Unauthorized AI infrastructure operating without enterprise security oversight (e.g., personal Claude Desktop clients connecting to corporate MCP servers).<a href="#section-1.6-7" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-1.6-1">
+          <dt id="section-1.6-1.1">AI Agent:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.6-1.2">
+            <p id="section-1.6-1.2.1">An autonomous system that invokes tools, maintains conversational context, and operates through protocols like MCP.<a href="#section-1.6-1.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.6-1.3">Tool Invocation:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.6-1.4">
+            <p id="section-1.6-1.4.1">An AI-initiated operation that accesses data, executes code, or interacts with external systems.<a href="#section-1.6-1.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.6-1.5">Semantic Transformation:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.6-1.6">
+            <p id="section-1.6-1.6.1">The process by which AI systems compress, summarize, or reformulate data while preserving informational content.<a href="#section-1.6-1.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.6-1.7">Unmanaged AI Client:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.6-1.8">
+            <p id="section-1.6-1.8.1">An AI agent operating outside formal governance frameworks, often embedded in developer tools or productivity applications.<a href="#section-1.6-1.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.6-1.9">Split-Transaction Transfer:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.6-1.10">
+            <p id="section-1.6-1.10.1">Data access pattern where information moves across multiple HTTP transactions, temporal boundaries, or protocol layers rather than a single atomic operation.<a href="#section-1.6-1.10.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
 </section>
 </div>
 </section>
@@ -1432,27 +1479,45 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-event-flow-model">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-event-flow-model" class="section-name selfRef">Event Flow Model</a>
         </h3>
-<p id="section-2.1-1">Security events in AI agent systems originate from multiple execution points. A generalized flow encompasses:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.1-2">User -&gt; AI agent -&gt; [gateway] -&gt; Tool server -&gt; Resource -&gt; AI model -&gt; Output -&gt; Destination<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.1-3">Each transition point represents a potential security event generation surface. Events flow to security controls (Endpoint, SSE) for analysis, correlation, and policy enforcement.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">The event framework observes AI agent operations at three distinct detection surfaces:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.1-2">
+          <dt id="section-2.1-2.1">Network Telemetry Layer:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.2">
+            <p id="section-2.1-2.2.1">Captures HTTP transactions, TLS metadata, and protocol-level indicators without requiring payload inspection. Production validation demonstrates &gt;95% detection accuracy using User-Agent strings, temporal burst patterns, payload asymmetry, and endpoint signatures.<a href="#section-2.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.3">Application Integration Layer:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.4">
+            <p id="section-2.1-2.4.1">Observes tool invocations, resource access, and data retrieval through MCP server instrumentation or similar agent framework hooks.<a href="#section-2.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-2.1-2.5">Semantic Analysis Layer:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-2.6">
+            <p id="section-2.1-2.6.1">Correlates data access patterns across transactions, sessions, and agent interactions to detect aggregate information disclosure.<a href="#section-2.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
 <div id="split-transaction-transfer-model">
 <section id="section-2.1.1">
           <h4 id="name-split-transaction-transfer-">
 <a href="#section-2.1.1" class="section-number selfRef">2.1.1. </a><a href="#name-split-transaction-transfer-" class="section-name selfRef">Split-Transaction Transfer Model</a>
           </h4>
-<p id="section-2.1.1-1">To accurately log AI data access, the event model MUST account for decoupled transfer patterns common in Large Language Model (LLM) interactions. This specification defines the "Split-Transaction" model as a sequence where:<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-2.1.1-2">
-<li id="section-2.1.1-2.1">
-              <p id="section-2.1.1-2.1.1">Initiation Event: The agent or user signals intent to transfer data. This event carries the Semantic Context (User ID, Session ID, Filename) but lacks the Binary Payload.<a href="#section-2.1.1-2.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-1">Traditional security monitoring assumes atomic data transfers - a single HTTP POST containing a complete file, or a single database query returning a result set.  AI agent interactions frequently violate this assumption through patterns observed in production deployments:<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1.1-2.1">
+              <p id="section-2.1.1-2.1.1">Temporal Splitting: Data access distributed across multiple tool invocations over hours or days (e.g., agent retrieves customer list on Monday, financial data on Tuesday, generates combined analysis on Wednesday)<a href="#section-2.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-2.1.1-2.2">
-              <p id="section-2.1.1-2.2.1">Authorization Event: The service returns a temporary access token or pre-signed URI.<a href="#section-2.1.1-2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2.1.1-2.2">
+              <p id="section-2.1.1-2.2.1">Semantic Splitting: Information transformed across transactions (e.g., agent reads 500KB document, extracts key points, generates 2KB summary, shares summary externally)<a href="#section-2.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-2.1.1-2.3">
-              <p id="section-2.1.1-2.3.1">Transfer Event: The payload is transmitted to the authorized URI. This event carries the Binary Payload but often lacks the Semantic Context (due to the absence of authentication cookies or headers on the storage endpoint).<a href="#section-2.1.1-2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2.1.1-2.3">
+              <p id="section-2.1.1-2.3.1">Protocol Splitting: Data movement across multiple protocol layers (e.g., database query via MCP tool → LLM processing → external API call)<a href="#section-2.1.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          </ol>
-<p id="section-2.1.1-3">This taxonomy introduces the correlation_id field (Section 4.1) specifically to allow implementations to link the Initiation Event with the Transfer Event, even when they traverse different protocols or endpoints, ensuring that the semantic meaning of the data remains attached to the binary transfer in the security log.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2.1.1-2.4">
+              <p id="section-2.1.1-2.4.1">Agent Splitting: Information aggregated through multi-agent coordination (e.g., Agent A retrieves data, Agent B analyzes, Agent C disseminates)<a href="#section-2.1.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-2.1.1-3">Detection of split-transaction transfers requires correlation of events across time, agents, and protocols - capabilities absent from traditional DLP and CASB systems designed around file-based operations.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1462,25 +1527,21 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-detection-surfaces">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-detection-surfaces" class="section-name selfRef">Detection Surfaces</a>
         </h3>
-<p id="section-2.2-1">Implementations MAY observe AI agent activity through multiple detection surfaces:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">Event generation may occur at multiple observation points:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2-2.1">
-            <p id="section-2.2-2.1.1">Network telemetry: Inline inspection of AI agent protocol traffic<a href="#section-2.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-2.1.1">Network proxies or gateways (inline observation)<a href="#section-2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-2.2">
-            <p id="section-2.2-2.2.1">Endpoint telemetry: Process monitoring, file access, configuration discovery<a href="#section-2.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-2.2.1">MCP servers or agent frameworks (application-layer hooks)<a href="#section-2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-2.3">
-            <p id="section-2.2-2.3.1">Gateway instrumentation: Event generation from consolidation layers<a href="#section-2.2-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-2.3.1">SIEM correlation engines (post-collection analysis)<a href="#section-2.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.2-2.4">
-            <p id="section-2.2-2.4.1">Runtime instrumentation: SDK-based event generation within applications<a href="#section-2.2-2.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-2.2-2.5">
-            <p id="section-2.2-2.5.1">Cloud service logging: API logs from AI model providers and SaaS platforms<a href="#section-2.2-2.5.1" class="pilcrow">¶</a></p>
+            <p id="section-2.2-2.4.1">Endpoint agents (client-side monitoring)<a href="#section-2.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-2.2-3">No single detection surface provides complete visibility. Implementations SHOULD combine multiple surfaces for comprehensive monitoring.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="deployment-pattern-taxonomy">
@@ -1488,13 +1549,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-deployment-pattern-taxonomy">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-deployment-pattern-taxonomy" class="section-name selfRef">Deployment Pattern Taxonomy</a>
         </h3>
-<p id="section-2.3-1">AI agent systems deploy through five distinct architectural patterns, each with unique security characteristics:<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">The framework addresses five common deployment architectures observed in production AI systems:<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 <div id="direct-client-server-pattern">
 <section id="section-2.3.1">
           <h4 id="name-direct-client-server-patter">
 <a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-direct-client-server-patter" class="section-name selfRef">Direct Client-Server Pattern</a>
           </h4>
-<p id="section-2.3.1-1">AI clients connect directly to individual tool servers. Detection requires monitoring N independent server connections. Common in desktop AI applications connecting to cloud storage APIs. Security characteristic: Distributed detection requirements across multiple endpoints.<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.1-1">AI client communicates directly with MCP servers or AI APIs. Detection relies on network telemetry and endpoint monitoring.<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="gateway-pattern">
@@ -1502,7 +1563,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-gateway-pattern">
 <a href="#section-2.3.2" class="section-number selfRef">2.3.2. </a><a href="#name-gateway-pattern" class="section-name selfRef">Gateway Pattern</a>
           </h4>
-<p id="section-2.3.2-1">Multiple tool servers consolidated behind a unified gateway endpoint. Reduces detection complexity to single observation point. Common in enterprise deployments with centralized AI infrastructure. Security characteristic: Simplified monitoring through consolidation layer.<a href="#section-2.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.2-1">Centralized proxy or gateway consolidates AI traffic.  Enables inline policy enforcement and comprehensive logging.<a href="#section-2.3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="embedded-ai-pattern">
@@ -1510,7 +1571,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-embedded-ai-pattern">
 <a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-embedded-ai-pattern" class="section-name selfRef">Embedded AI Pattern</a>
           </h4>
-<p id="section-2.3.3-1">AI capabilities integrated within trusted applications. Traditional security boundaries assume trusted environment and skip inspection. Production evidence shows 30-40% of AI traffic in this category. Security characteristic: Requires endpoint-based detection since network inspection is bypassed.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.3-1">AI capabilities embedded within trusted applications (e.g., code editors, productivity tools).  These often operate outside formal governance and require specialized detection methods.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="autonomous-agent-pattern">
@@ -1518,7 +1579,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-autonomous-agent-pattern">
 <a href="#section-2.3.4" class="section-number selfRef">2.3.4. </a><a href="#name-autonomous-agent-pattern" class="section-name selfRef">Autonomous Agent Pattern</a>
           </h4>
-<p id="section-2.3.4-1">AI systems operating with minimal human supervision. Extended execution timeframes and complex tool chaining. Common in workflow automation and research applications. Security characteristic: Long-running sessions requiring persistent event correlation.<a href="#section-2.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.4-1">Self-directed agents operating with minimal human supervision. Require continuous monitoring and automated risk assessment.<a href="#section-2.3.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="multi-agent-orchestration-pattern">
@@ -1526,7 +1587,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-multi-agent-orchestration-p">
 <a href="#section-2.3.5" class="section-number selfRef">2.3.5. </a><a href="#name-multi-agent-orchestration-p" class="section-name selfRef">Multi-Agent Orchestration Pattern</a>
           </h4>
-<p id="section-2.3.5-1">Multiple AI agents collaborating on complex tasks. Agent-to-agent communication introduces lateral movement concerns. Emerging in advanced enterprise AI deployments. Security characteristic: Requires tracking information flow across agent boundaries.<a href="#section-2.3.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.5-1">Coordinated agent systems with specialized roles.  Detection requires cross-agent correlation to identify aggregate risks.<a href="#section-2.3.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1538,18 +1599,14 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-event-taxonomy">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-event-taxonomy" class="section-name selfRef">Event Taxonomy</a>
       </h2>
-<p id="section-3-1">This section defines the core event categories that comprise the AI agent security monitoring framework.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">The framework documents five event categories that capture AI agent security lifecycle:<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="discovery-events">
 <section id="section-3.1">
         <h3 id="name-discovery-events">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-discovery-events" class="section-name selfRef">Discovery Events</a>
         </h3>
-<p id="section-3.1-1">Discovery events identify the presence of AI agent infrastructure components regardless of authorization status. These events provide the foundation for asset inventory and governance enforcement.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Event Types:
-* agent_discovered: AI client or agent detected
-* server_discovered: Tool server endpoint identified
-* gateway_discovered: Consolidation layer detected<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">Discovery events MUST include: component_type, protocol_indicators, detection_method, confidence_score<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">Discovery events document the identification of AI agents, unmanaged clients, and protocol endpoints.  These events establish the foundational inventory for security monitoring.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Key attributes include agent type, protocol version, authentication context, and discovery method (network telemetry, application integration, or user report).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="risk-assessment-events">
@@ -1557,12 +1614,24 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-risk-assessment-events">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-risk-assessment-events" class="section-name selfRef">Risk Assessment Events</a>
         </h3>
-<p id="section-3.2-1">Risk events evaluate discovered components against security policies and enterprise governance frameworks. These events enable differentiation between authorized and shadow infrastructure.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">Event Types:
-* shadow_component_detected: Unauthorized infrastructure identified
-* policy_violation_detected: Component operates outside governance framework
-* risk_score_calculated: Risk assessment completed for component<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">Risk events MUST include: risk_score, policy_reference, authorization_status, remediation_priority<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">Risk assessment events document security posture evaluation of discovered AI agents, including:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2-2.1">
+            <p id="section-3.2-2.1.1">Governance status (managed vs. unmanaged)<a href="#section-3.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-2.2">
+            <p id="section-3.2-2.2.1">Authentication and authorization mechanisms<a href="#section-3.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-2.3">
+            <p id="section-3.2-2.3.1">Data access scope and permissions<a href="#section-3.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-2.4">
+            <p id="section-3.2-2.4.1">Protocol security characteristics (encryption, integrity)<a href="#section-3.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.2-2.5">
+            <p id="section-3.2-2.5.1">Compliance posture relative to organizational policies<a href="#section-3.2-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="data-access-events">
@@ -1570,12 +1639,24 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-data-access-events">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-data-access-events" class="section-name selfRef">Data Access Events</a>
         </h3>
-<p id="section-3.3-1">Data Access events track tool invocations that retrieve, process, or transmit enterprise data. These events enable monitoring of what data AI agents access and where it flows.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">Event Types:
-* tool_invoked: Agent initiated tool execution
-* data_retrieved: Tool returned data to agent
-* data_transmitted: Data sent to external destination<a href="#section-3.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.3-3">Data Access events MUST include: tool_name, data_sensitivity, access_result, byte_count<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">Data access events document AI agent interactions with enterprise resources, capturing:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3-2.1">
+            <p id="section-3.3-2.1.1">Tool invocations (type, target, parameters)<a href="#section-3.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.2">
+            <p id="section-3.3-2.2.1">Resource access (databases, APIs, file systems)<a href="#section-3.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.3">
+            <p id="section-3.3-2.3.1">Data volume and classification<a href="#section-3.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.4">
+            <p id="section-3.3-2.4.1">User-to-Agent (U2A) attribution<a href="#section-3.3-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.3-2.5">
+            <p id="section-3.3-2.5.1">Temporal patterns and access frequency<a href="#section-3.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="policy-enforcement-events">
@@ -1583,12 +1664,21 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-policy-enforcement-events">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-policy-enforcement-events" class="section-name selfRef">Policy Enforcement Events</a>
         </h3>
-<p id="section-3.4-1">Policy Enforcement events document security control decisions applied to AI agent operations. These events provide audit trails for compliance and enable detection of policy bypass attempts.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">Event Types:
-* access_allowed: Operation permitted by policy
-* access_denied: Operation blocked by policy
-* quota_exceeded: Rate limit or threshold exceeded<a href="#section-3.4-2" class="pilcrow">¶</a></p>
-<p id="section-3.4-3">Policy Enforcement events MUST include: policy_decision, enforcement_point, justification, override_status<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">Policy enforcement events document security decisions and actions:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4-2.1">
+            <p id="section-3.4-2.1.1">Policy evaluations (allow, deny, alert)<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.2">
+            <p id="section-3.4-2.2.1">Enforcement actions (block, quarantine, log)<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.3">
+            <p id="section-3.4-2.3.1">Justification and rule matching<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.4-2.4">
+            <p id="section-3.4-2.4.1">Override mechanisms and approvals<a href="#section-3.4-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="semantic-data-lineage-events">
@@ -1596,12 +1686,24 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-semantic-data-lineage-event">
 <a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-semantic-data-lineage-event" class="section-name selfRef">Semantic Data Lineage Events</a>
         </h3>
-<p id="section-3.5-1">Semantic Lineage events track how meaning propagates through AI transformations, addressing the unique challenge of semantic data exfiltration where traditional content-based monitoring fails.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
-<p id="section-3.5-2">Event Types:
-* semantic_transformation_detected: Data meaning altered by AI processing
-* context_persisted: Information stored in conversational memory
-* meaning_exfiltrated: Semantic content transmitted to unauthorized destination<a href="#section-3.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.5-3">Semantic Lineage events MUST include: transformation_type, meaning_preservation_score, source_data_classification, destination_classification<a href="#section-3.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.5-1">Semantic data lineage events track data transformation and movement across AI interactions:<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.5-2.1">
+            <p id="section-3.5-2.1.1">Source data identification and classification<a href="#section-3.5-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.5-2.2">
+            <p id="section-3.5-2.2.1">Transformation operations (summarization, extraction, synthesis)<a href="#section-3.5-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.5-2.3">
+            <p id="section-3.5-2.3.1">Cross-session correlation identifiers<a href="#section-3.5-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.5-2.4">
+            <p id="section-3.5-2.4.1">Aggregate risk assessment<a href="#section-3.5-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.5-2.5">
+            <p id="section-3.5-2.5.1">Downstream data usage and distribution<a href="#section-3.5-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 </section>
@@ -1611,7 +1713,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-common-event-schema-element">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-common-event-schema-element" class="section-name selfRef">Common Event Schema Elements</a>
       </h2>
-<p id="section-4-1">All events in this taxonomy MUST include the following core fields:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">All events in the framework share common schema elements that enable correlation and analysis:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="event-classification">
 <section id="section-4.1">
         <h3 id="name-event-classification">
@@ -1619,10 +1721,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.1-1.1">
-            <p id="section-4.1-1.1.1">event_category: Event category, constrained to: discovery, risk_assessment, data_access, policy_enforcement, semantic_lineage<a href="#section-4.1-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-1.1.1">event_type: Primary category (discovery, risk_assessment, data_access, policy_enforcement, semantic_lineage)<a href="#section-4.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-1.2">
-            <p id="section-4.1-1.2.1">event_type: Specific event type within category (e.g., agent_discovered, data_transmitted, meaning_exfiltrated)<a href="#section-4.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-1.2.1">event_subtype: Specific operation within category<a href="#section-4.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.1-1.3">
+            <p id="section-4.1-1.3.1">severity: Risk level (info, low, medium, high, critical)<a href="#section-4.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.1-1.4">
+            <p id="section-4.1-1.4.1">confidence: Detection confidence score (0.0-1.0)<a href="#section-4.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1634,19 +1742,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.2-1.1">
-            <p id="section-4.2-1.1.1">event_id: Unique identifier for this event (UUID format)<a href="#section-4.2-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.1.1">correlation_id: Session or conversation identifier<a href="#section-4.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-1.2">
-            <p id="section-4.2-1.2.1">correlation_id: Links related events in multi-step operations<a href="#section-4.2-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.2.1">u2a_session_id: User-to-Agent session tracking<a href="#section-4.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-1.3">
-            <p id="section-4.2-1.3.1">parent_event_id: References causative event in chain<a href="#section-4.2-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.3.1">parent_event_id: Reference to related events<a href="#section-4.2-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-1.4">
-            <p id="section-4.2-1.4.1">session_id: Groups events within single user session<a href="#section-4.2-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.4.1">agent_chain_id: Multi-agent orchestration tracking<a href="#section-4.2-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.2-2">The correlation_id field specifically addresses the Split-Transaction Transfer Model by enabling implementations to link metadata-rich initiation events with payload-carrying transfer events. Implementations MUST use this field to correlate events across the decoupled transaction pattern described in Section 2.1.1.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="temporal-fields">
@@ -1656,13 +1763,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.3-1.1">
-            <p id="section-4.3-1.1.1">timestamp: Event generation time (ISO 8601 format)<a href="#section-4.3-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-1.1.1">timestamp: Event occurrence time (ISO 8601)<a href="#section-4.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-1.2">
-            <p id="section-4.3-1.2.1">event_duration_ms: Operation execution time<a href="#section-4.3-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-1.2.1">session_start_time: Session initiation<a href="#section-4.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-1.3">
-            <p id="section-4.3-1.3.1">detection_latency_ms: Time between occurrence and detection<a href="#section-4.3-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-1.3.1">session_end_time: Session termination<a href="#section-4.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.3-1.4">
+            <p id="section-4.3-1.4.1">event_sequence: Order within session<a href="#section-4.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1674,13 +1784,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.4-1.1">
-            <p id="section-4.4-1.1.1">user_id: Authenticated user identifier<a href="#section-4.4-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-1.1.1">user_id: Human user identifier<a href="#section-4.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-1.2">
-            <p id="section-4.4-1.2.1">agent_id: AI agent instance identifier<a href="#section-4.4-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-1.2.1">agent_id: AI agent identifier<a href="#section-4.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-1.3">
-            <p id="section-4.4-1.3.1">organization_id: Tenant or organization identifier<a href="#section-4.4-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-1.3.1">client_id: Application or device identifier<a href="#section-4.4-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.4-1.4">
+            <p id="section-4.4-1.4.1">authentication_method: How identity was established<a href="#section-4.4-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1692,16 +1805,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.5-1.1">
-            <p id="section-4.5-1.1.1">source_ip: Origin address<a href="#section-4.5-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.5-1.1.1">source_ip: Originating IP address<a href="#section-4.5-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.5-1.2">
-            <p id="section-4.5-1.2.1">destination_ip: Target address<a href="#section-4.5-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.5-1.2.1">destination_ip: Target IP address<a href="#section-4.5-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.5-1.3">
-            <p id="section-4.5-1.3.1">destination_domain: Target hostname<a href="#section-4.5-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.5-1.3.1">user_agent: HTTP User-Agent string<a href="#section-4.5-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.5-1.4">
-            <p id="section-4.5-1.4.1">protocol: Network protocol identifier<a href="#section-4.5-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-4.5-1.4.1">protocol: Transport protocol (https, mcp-stdio, grpc)<a href="#section-4.5-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.5-1.5">
+            <p id="section-4.5-1.5.1">tls_version: TLS protocol version<a href="#section-4.5-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1713,13 +1829,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
         </h3>
 <ul class="normal">
 <li class="normal" id="section-4.6-1.1">
-            <p id="section-4.6-1.1.1">data_sensitivity: Classification level (public, internal, confidential, restricted)<a href="#section-4.6-1.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.6-1.1.1">data_classification: Sensitivity level (public, internal, confidential, restricted)<a href="#section-4.6-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.6-1.2">
-            <p id="section-4.6-1.2.1">data_categories: Types of data accessed (PII, financial, source_code, etc.) - RECOMMENDED for data access events<a href="#section-4.6-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.6-1.2.1">data_category: Type of information (financial, customer, source code, healthcare)<a href="#section-4.6-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.6-1.3">
-            <p id="section-4.6-1.3.1">regulatory_flags: Applicable compliance frameworks (GDPR, HIPAA, SOC2, etc.)<a href="#section-4.6-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.6-1.3.1">data_volume: Bytes transferred or accessed<a href="#section-4.6-1.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1731,12 +1847,27 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
+<p id="section-5-1">This framework addresses security monitoring for AI agent systems. Implementation introduces additional security considerations:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="privacy-protection">
 <section id="section-5.1">
         <h3 id="name-privacy-protection">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-privacy-protection" class="section-name selfRef">Privacy Protection</a>
         </h3>
-<p id="section-5.1-1">Implementations MUST minimize collection of AI prompt content and model responses. Detection SHOULD rely on metadata analysis (timing patterns, payload sizes, endpoint signatures) rather than deep packet inspection of conversational content.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">Event collection must balance security visibility with privacy protection.  Implementations should:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1-2.1">
+            <p id="section-5.1-2.1.1">Capture metadata without recording conversation content<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-2.2">
+            <p id="section-5.1-2.2.1">Implement data minimization principles<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-2.3">
+            <p id="section-5.1-2.3.1">Respect regulatory requirements (GDPR, CCPA, etc.)<a href="#section-5.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.1-2.4">
+            <p id="section-5.1-2.4.1">Provide user transparency and consent mechanisms<a href="#section-5.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="false-positive-management">
@@ -1744,7 +1875,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-false-positive-management">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-false-positive-management" class="section-name selfRef">False Positive Management</a>
         </h3>
-<p id="section-5.2-1">Multi-signal fusion SHOULD be used to achieve high detection confidence. Production validation in Appendix B demonstrates that single-signal detection typically achieves only 50-70% confidence, while multi-signal correlation (3+ signals) exceeds 95% confidence. Implementations SHOULD correlate User-Agent analysis, temporal patterns, payload characteristics, and endpoint signatures. No single detection surface provides complete visibility; combining multiple surfaces reduces both false positives and false negatives.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">Network telemetry-based detection may generate false positives. Production validation suggests multi-signal fusion (combining User-Agent, temporal patterns, and payload characteristics) achieves &gt;95% accuracy.  Organizations should tune detection thresholds based on their risk tolerance and operational requirements.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="evasion-resistance">
@@ -1752,11 +1883,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-evasion-resistance">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-evasion-resistance" class="section-name selfRef">Evasion Resistance</a>
         </h3>
-<p id="section-5.3-1">Adversaries may attempt to evade detection through:
-* Protocol mimicry: Making AI traffic appear as standard HTTPS
-* Timing manipulation: Introducing artificial delays to avoid burst detection
-* Payload obfuscation: Encrypting or encoding transmitted data<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">Implementations SHOULD employ multiple detection surfaces and regularly update signatures based on emerging evasion techniques.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.3-1">Sophisticated adversaries may attempt to evade detection by:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.3-2.1">
+            <p id="section-5.3-2.1.1">Manipulating User-Agent strings<a href="#section-5.3-2.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-2.2">
+            <p id="section-5.3-2.2.1">Introducing artificial delays to avoid temporal signatures<a href="#section-5.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-2.3">
+            <p id="section-5.3-2.3.1">Fragmenting data access across multiple agents or sessions<a href="#section-5.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-5.3-3">Defense requires layered detection combining network telemetry, application integration, and behavioral analysis.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="encrypted-traffic-handling">
@@ -1764,7 +1903,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-encrypted-traffic-handling">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-encrypted-traffic-handling" class="section-name selfRef">Encrypted Traffic Handling</a>
         </h3>
-<p id="section-5.4-1">AI agent protocols predominantly use TLS 1.3 encryption. Implementations requiring deep inspection MUST implement TLS interception with appropriate user consent, certificate management, and privacy safeguards. Metadata-only detection is RECOMMENDED as a privacy-preserving alternative.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">Most AI agent traffic operates over TLS.  Network-based detection relies on unencrypted metadata (TLS handshakes, User-Agent strings, endpoint URLs, timing patterns).  Organizations requiring payload inspection must implement TLS interception with appropriate user notification and consent.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1774,7 +1913,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">This document has no IANA actions. Future versions may define an IANA registry for AI security event types and category identifiers.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
@@ -1799,7 +1938,6 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-json-schema-examples">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-json-schema-examples" class="section-name selfRef">JSON Schema Examples</a>
       </h2>
-<p id="appendix-A-1">This appendix provides informative examples of event schemas in JSON format.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <div id="discovery-event-example">
 <section id="appendix-A.1">
         <h3 id="name-discovery-event-example">
@@ -1808,24 +1946,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div class="lang-json sourcecode" id="appendix-A.1-1">
 <pre>
 {
-  "event_id": "550e8400-e29b-41d4-a716-446655440000",
-  "event_type": "agent_discovered",
-  "event_category": "discovery",
-  "timestamp": "2025-12-16T08:04:34Z",
-  "component_type": "desktop_agent",
-  "agent_signature": {
-    "user_agent": "Unknown(connect-es/1.6.1)",
-    "electron_version": "37.7.0",
-    "protocol_indicators": ["grpc-web", "mcp-client"]
-  },
+  "event_type": "discovery",
+  "event_subtype": "unmanaged_client_detected",
+  "timestamp": "2024-03-15T14:23:45Z",
+  "agent_id": "cursor-ide-v0.42.1",
+  "user_agent": "Electron/37.7.0",
   "detection_method": "network_telemetry",
-  "confidence_score": 0.95,
+  "confidence": 0.95,
   "network_context": {
-    "source_ip": "10.0.0.25",
-    "destination_domain": "api2.cursor.sh",
-    "destination_ip": "52.32.178.96",
-    "protocol": "https",
-    "tls_version": "1.3"
+    "source_ip": "10.0.1.42",
+    "destination_host": "api2.cursor.sh",
+    "protocol": "https"
   }
 }
 </pre><a href="#appendix-A.1-1" class="pilcrow">¶</a>
@@ -1840,21 +1971,22 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div class="lang-json sourcecode" id="appendix-A.2-1">
 <pre>
 {
-  "event_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
-  "event_type": "data_transmitted",
-  "event_category": "data_access",
-  "timestamp": "2025-12-16T08:10:10Z",
-  "correlation_id": "upload-session-12345",
-  "tool_name": "filesyncservice.fsuploadfile",
-  "data_sensitivity": "internal",
-  "data_categories": ["source_code"],
-  "byte_count": 10515,
-  "user_id": "user@example.com",
-  "session_id": "session-abc123",
+  "event_type": "data_access",
+  "event_subtype": "tool_invocation",
+  "timestamp": "2024-03-15T14:25:12Z",
+  "correlation_id": "session-a1b2c3d4",
+  "u2a_session_id": "user-123-agent-cursor",
+  "user_id": "user-123",
+  "agent_id": "cursor-ide-v0.42.1",
+  "tool_name": "file_upload",
+  "data_classification": "source_code",
+  "data_volume": 12519,
+  "endpoint": "/aiserver.v1.filesyncservice/fsuploadfile",
   "network_context": {
-    "source_ip": "10.0.0.25",
-    "destination_domain": "us-only.gcpp.cursor.sh",
-    "destination_ip": "18.237.140.108"
+    "source_ip": "10.0.1.42",
+    "destination_host": "us-only.gcpp.cursor.sh",
+    "protocol": "https",
+    "method": "POST"
   }
 }
 </pre><a href="#appendix-A.2-1" class="pilcrow">¶</a>
@@ -1869,20 +2001,24 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div class="lang-json sourcecode" id="appendix-A.3-1">
 <pre>
 {
-  "event_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "event_type": "semantic_transformation_detected",
-  "event_category": "semantic_lineage",
-  "timestamp": "2025-12-16T08:10:20Z",
-  "transformation_type": "summarization",
-  "meaning_preservation_score": 0.92,
-  "source_data_classification": "confidential",
-  "destination_classification": "public_ai_service",
-  "transformation_details": {
-    "input_size_bytes": 524288,
-    "output_size_bytes": 2048,
-    "compression_ratio": 256.0,
-    "semantic_categories_preserved": ["financial_data"]
-  }
+  "event_type": "semantic_lineage",
+  "event_subtype": "cross_session_aggregation",
+  "timestamp": "2024-03-15T14:30:00Z",
+  "correlation_id": "lineage-e5f6g7h8",
+  "source_events": [
+    "event-123-data-access",
+    "event-124-data-access",
+    "event-125-transformation"
+  ],
+  "aggregate_risk": "high",
+  "risk_factors": [
+    "Multiple confidential sources accessed",
+    "Data aggregated across 3-day period",
+    "Output shared externally"
+  ],
+  "data_classification": "confidential",
+  "total_data_volume": 524288,
+  "transformation_type": "summarization"
 }
 </pre><a href="#appendix-A.3-1" class="pilcrow">¶</a>
 </div>
@@ -1895,20 +2031,20 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-production-validation-evide">
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-production-validation-evide" class="section-name selfRef">Production Validation Evidence</a>
       </h2>
-<p id="appendix-B-1">NOTE: This appendix is informative, not normative. It provides empirical validation of the event schemas and detection methods.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">This appendix documents validation testing performed on production network traffic to assess the feasibility and accuracy of the proposed event framework.  The validation demonstrates that AI agent detection and monitoring can be achieved using network telemetry without requiring deep packet inspection of encrypted traffic.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">Validation Methodology: Analysis of production Zscaler proxy logs from a single enterprise deployment, focusing on network-level indicators observable without decrypting AI conversations.  The validation specifically targeted detection of unmanaged AI clients operating outside formal governance frameworks.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">Objective: Demonstrate that the event schemas described in this document can be populated from real network traffic and that detection signatures achieve acceptable accuracy without violating user privacy.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">Key Finding: In the analyzed deployment, traditional file-based DLP systems achieved 0% detection of AI-mediated data exposure while network telemetry-based detection (using the methods described in this document) achieved &gt;95% accuracy in identifying unmanaged AI client traffic.<a href="#appendix-B-4" class="pilcrow">¶</a></p>
 <div id="dataset-characteristics">
 <section id="appendix-B.1">
         <h3 id="name-dataset-characteristics">
 <a href="#appendix-B.1" class="section-number selfRef">B.1. </a><a href="#name-dataset-characteristics" class="section-name selfRef">Dataset Characteristics</a>
         </h3>
-<p id="appendix-B.1-1">Traffic Source: Zscaler Zero Trust Exchange (ZIA)
-Collection Date: December 16, 2025
-Collection Time: 07:45:35 - 08:13:45 UTC (28 minutes)
-Total Transactions: 656 HTTP/HTTPS requests
-Users: 2 authenticated
-SSL Inspection: 90.7% coverage
-TLS Versions: TLS 1.3 (81%), TLS 1.2 (10%)
-Geographic Flow: United States (client) -&gt; United States (AI services)<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-1">Source: Production Zscaler proxy logs
+Duration: 28-minute observation window (08:04:34 - 08:32:49 UTC)
+Total Transactions: 525 network sessions
+Geographic Scope: United States traffic flows
+Organization Type: Enterprise deployment with traditional DLP controls active<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="detection-results-summary">
@@ -1916,46 +2052,41 @@ Geographic Flow: United States (client) -&gt; United States (AI services)<a href
         <h3 id="name-detection-results-summary">
 <a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-detection-results-summary" class="section-name selfRef">Detection Results Summary</a>
         </h3>
-<p id="appendix-B.2-1">Agent Activity Events Generated: 63
-Semantic Exposure Events Generated: 5
-Detection Rate: 100% within this 28-minute dataset
-False Positive Rate: 0% (no browser traffic misclassified)
-Precision: 100% (63 true positives, 0 false positives)<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.2-2">Shadow MCP Client Identified: Cursor IDE v2.2.23
-Data Exfiltrated: 57,324 bytes (56 KB) via file synchronization operations
-Data Transfer: United States -&gt; United States (cloud AI services)
-Traditional DLP Coverage: File-oriented DLP controls did not generate violations for these uploads, despite 56 KB of source code being transmitted via API payloads<a href="#appendix-B.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-1">Unmanaged AI Client Detected: Cursor IDE (AI-powered code editor)
+Traffic Volume: 57 transactions (10.8% of observed traffic)
+Data Uploaded: 56 KB source code to third-party AI service
+Traditional DLP Detection: 0% (no violations generated)
+Network Telemetry Detection: 100% (all 57 Cursor transactions identified)<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="shadow-mcp-client-signature-evidence">
+<div id="unmanaged-mcp-client-signature-evidence">
 <section id="appendix-B.3">
-        <h3 id="name-shadow-mcp-client-signature">
-<a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-shadow-mcp-client-signature" class="section-name selfRef">Shadow MCP Client Signature Evidence</a>
+        <h3 id="name-unmanaged-mcp-client-signat">
+<a href="#appendix-B.3" class="section-number selfRef">B.3. </a><a href="#name-unmanaged-mcp-client-signat" class="section-name selfRef">Unmanaged MCP Client Signature Evidence</a>
         </h3>
-<p id="appendix-B.3-1">User-Agent: "Unknown(connect-es/1.6.1)"
-gRPC-Web client library (https://github.com/connectrpc/connect-es)
-53 occurrences (84% of Cursor traffic)
-Does NOT declare agent identity ("Cursor IDE")
-Only identified through correlation with "Electron/37.7.0" signatures<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.3-2">Endpoint Pattern: api2.cursor.sh/aiserver.v1.*
+<p id="appendix-B.3-1">The following signatures were observed in production traffic for Cursor IDE, an AI-powered code editor that operates as an unmanaged MCP client:<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-2">User-Agent Signature: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36 Edg/131.0.2903.112
+Desktop application masquerading as browser - validated and cross-referenced through additional analysis
+Desktop client nature identified through correlation with "Electron/37.7.0" signatures<a href="#appendix-B.3-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-3">Endpoint Pattern: api2.cursor.sh/aiserver.v1.*
 Service-oriented architecture (gRPC-style)
 File synchronization: /aiserver.v1.filesyncservice/fsuploadfile
-Dashboard services: /dashboardservice/getteams, /getuserprivacymode<a href="#appendix-B.3-2" class="pilcrow">¶</a></p>
-<p id="appendix-B.3-3">Temporal Pattern - Sub-Second Burst:<a href="#appendix-B.3-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-B.3-4">
+Dashboard services: /dashboardservice/getteams, /getuserprivacymode<a href="#appendix-B.3-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-4">Temporal Pattern - Sub-Second Burst:<a href="#appendix-B.3-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-B.3-5">
 <pre>
 08:04:34.000 UTC | POST | /dashboardservice/getteams (1,396 bytes)
 08:04:34.000 UTC | POST | /aiservice/checkfeaturesstatus (2,252 bytes)
 08:04:34.000 UTC | POST | /.../getuserprivacymode (1,417 bytes)
 08:04:34.000 UTC | POST | /aiservice/checknumberconfigs (1,908 bytes)
-</pre><a href="#appendix-B.3-4" class="pilcrow">¶</a>
+</pre><a href="#appendix-B.3-5" class="pilcrow">¶</a>
 </div>
-<p id="appendix-B.3-5">Four API calls within same second timestamp - impossible for human browser interaction (typical human latency: 1-2 seconds minimum).<a href="#appendix-B.3-5" class="pilcrow">¶</a></p>
-<p id="appendix-B.3-6">Payload Asymmetry: 18.37x request/response ratio
+<p id="appendix-B.3-6">Four API calls within same second timestamp - impossible for human browser interaction (typical human latency: 1-2 seconds minimum).<a href="#appendix-B.3-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-7">Payload Asymmetry: 18.37x request/response ratio
 Total uploaded: 57,324 bytes
 Total received: 3,120 bytes
-Pattern indicates: large context uploads -&gt; minimal AI acknowledgment responses
-Characteristic of code assistant workflows<a href="#appendix-B.3-6" class="pilcrow">¶</a></p>
+Pattern indicates: large context uploads followed by minimal AI acknowledgment responses
+Characteristic of code assistant workflows<a href="#appendix-B.3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="semantic-data-exposure-evidence">
@@ -1977,14 +2108,7 @@ Transaction #567 | 08:10:15 UTC | 11,214 bytes
 Method: POST
 User-Agent: Unknown(connect-es/1.6.1)
 Total: 57,324 bytes (56 KB)<a href="#appendix-B.4-3" class="pilcrow">¶</a></p>
-<p id="appendix-B.4-4">Traditional DLP Coverage:
-File-oriented DLP controls did not generate violations for these uploads
-NO file downloads (HTTP GET with file MIME types)
-NO file attachments
-NO cloud storage sync operations
-Data transmitted in HTTP POST bodies (gRPC-Web serialization)
-Traditional DLP verdict: ALLOWED (saw only "POST -&gt; 200 OK")
-Reality: 56 KB source code uploaded to third-party AI service<a href="#appendix-B.4-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.4-4">Traditional DLP Coverage: File-oriented DLP controls did not generate violations for these uploads. No file downloads (HTTP GET with file MIME types), no file attachments, no cloud storage sync operations. Data transmitted in HTTP POST bodies (gRPC-Web serialization). Traditional DLP verdict: ALLOWED (observed only "POST -&gt; 200 OK") Reality: 56 KB source code uploaded to third-party AI service<a href="#appendix-B.4-4" class="pilcrow">¶</a></p>
 <p id="appendix-B.4-5">Payload sizes (10-12 KB) and /filesyncservice/fsuploadfile endpoint consistent with source code files being transmitted to AI backend.<a href="#appendix-B.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1993,13 +2117,16 @@ Reality: 56 KB source code uploaded to third-party AI service<a href="#appendix-
         <h3 id="name-detection-signature-validat">
 <a href="#appendix-B.5" class="section-number selfRef">B.5. </a><a href="#name-detection-signature-validat" class="section-name selfRef">Detection Signature Validation</a>
         </h3>
-<p id="appendix-B.5-1">Multi-Signal Fusion Results:
-Single Signal Confidence: ~50-70%
+<p id="appendix-B.5-1">Multi-Signal Fusion Results: Single Signal Confidence: approximately 50-70%
 Multi-Signal (3+) Confidence: &gt;95%
 Validated Approach: Correlate User-Agent + Temporal + Payload + Endpoint patterns<a href="#appendix-B.5-1" class="pilcrow">¶</a></p>
 <p id="appendix-B.5-2">Telemetry Source Effectiveness (signals marked HIGH achieve &gt;95% confidence when combined):<a href="#appendix-B.5-2" class="pilcrow">¶</a></p>
+<span id="name-detection-signature-effecti"></span><div id="detection-effectiveness">
 <table class="center" id="table-1">
-          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+          <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-detection-signature-effecti" class="selfRef">Detection Signature Effectiveness</a>
+          </caption>
 <thead>
             <tr>
               <th class="text-left" rowspan="1" colspan="1">Signal Type</th>
@@ -2040,6 +2167,7 @@ Validated Approach: Correlate User-Agent + Temporal + Payload + Endpoint pattern
             </tr>
           </tbody>
         </table>
+</div>
 </section>
 </div>
 <div id="privacy-compliance">
@@ -2047,11 +2175,9 @@ Validated Approach: Correlate User-Agent + Temporal + Payload + Endpoint pattern
         <h3 id="name-privacy-compliance">
 <a href="#appendix-B.6" class="section-number selfRef">B.6. </a><a href="#name-privacy-compliance" class="section-name selfRef">Privacy Compliance</a>
         </h3>
-<p id="appendix-B.6-1">Data Captured (Metadata Only):
-Byte counts, User-Agent strings, URL endpoints, timestamps, TLS characteristics, IP addresses, HTTP status codes, protocol identifiers<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.6-2">Data NOT Captured (Content):
-No AI prompt content, no AI response content, no source code inspected, no variable/function names, no semantic meaning from code<a href="#appendix-B.6-2" class="pilcrow">¶</a></p>
-<p id="appendix-B.6-3">Assessment: COMPLIANT with privacy requirements. All detection via network metadata. No deep packet inspection of AI prompts/responses performed or required.<a href="#appendix-B.6-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.6-1">Data Captured (Metadata Only): Byte counts, User-Agent strings, URL endpoints, timestamps, TLS characteristics, IP addresses, HTTP status codes, protocol identifiers<a href="#appendix-B.6-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.6-2">Data NOT Captured (Content): No AI prompt content, no AI response content, no source code inspected, no variable/function names, no semantic meaning from code<a href="#appendix-B.6-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.6-3">Assessment: COMPLIANT with privacy requirements.  All detection via network metadata.  No deep packet inspection of AI prompts/responses performed or required.<a href="#appendix-B.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-validation-conclusions">
@@ -2061,7 +2187,7 @@ No AI prompt content, no AI response content, no source code inspected, no varia
         </h3>
 <ol start="1" type="1" class="normal type-1" id="appendix-B.7-1">
 <li id="appendix-B.7-1.1">
-            <p id="appendix-B.7-1.1.1">Shadow MCP clients exist in production - Cursor IDE detected operating without governance oversight, generating 10.8% of observed traffic<a href="#appendix-B.7-1.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-B.7-1.1.1">Unmanaged MCP clients exist in production - Cursor IDE detected operating outside governance oversight, generating 10.8% of observed traffic<a href="#appendix-B.7-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-B.7-1.2">
             <p id="appendix-B.7-1.2.1">Network telemetry was sufficient in this dataset - 100% detection accuracy using User-Agent + timing + endpoints + payloads; no cloud API integration required<a href="#appendix-B.7-1.2.1" class="pilcrow">¶</a></p>
@@ -2070,7 +2196,7 @@ No AI prompt content, no AI response content, no source code inspected, no varia
             <p id="appendix-B.7-1.3.1">Cloud-side governance has no visibility - Zero integration detected; Cursor operated independently of enterprise AI control planes<a href="#appendix-B.7-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-B.7-1.4">
-            <p id="appendix-B.7-1.4.1">Semantic exposure bypassed file-oriented DLP in this deployment - 56 KB uploaded via API payloads invisible to file-based DLP systems<a href="#appendix-B.7-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-B.7-1.4.1">Semantic exposure operated outside file-oriented DLP in this deployment - 56 KB uploaded via API payloads invisible to file-based DLP systems<a href="#appendix-B.7-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="appendix-B.7-1.5">
             <p id="appendix-B.7-1.5.1">Event schemas are implementable - Valid JSON events successfully generated from real network transactions<a href="#appendix-B.7-1.5.1" class="pilcrow">¶</a></p>
@@ -2091,15 +2217,23 @@ Limited duration: 28-minute observation window
 Known agent type: Cursor IDE; other AI agents may exhibit different signatures
 No false negative analysis: Ground truth not available for comparison
 Geographic specificity: United States traffic flows; other regions may differ<a href="#appendix-B.8-1" class="pilcrow">¶</a></p>
-<p id="appendix-B.8-2">Despite these limitations, validation demonstrates the specification addresses an observable, real-world security gap with implementable detection methods.<a href="#appendix-B.8-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.8-2">Despite these limitations, validation demonstrates the document addresses an observable, real-world security gap with implementable detection methods.<a href="#appendix-B.8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="appendix-C">
+      <h2 id="name-acknowledgements">
+<a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="appendix-C-1">The author thanks Yaroslav Rosomakho for valuable discussions during the development of this framework.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-C">
-      <h2 id="name-authors-addresses">
-<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+<section id="appendix-D">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Jawaid Iqbal (<span class="role">editor</span>)</span></div>
@@ -2107,14 +2241,6 @@ Geographic specificity: United States traffic flows; other regions may differ<a 
 <div class="email">
 <span>Email:</span>
 <a href="mailto:jiqbal@zscaler.com" class="email">jiqbal@zscaler.com</a>
-</div>
-</address>
-<address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Yaroslav Rosomakho (<span class="role">editor</span>)</span></div>
-<div dir="auto" class="left"><span class="org">Zscaler</span></div>
-<div class="email">
-<span>Email:</span>
-<a href="mailto:yrosomakho@zscaler.com" class="email">yrosomakho@zscaler.com</a>
 </div>
 </address>
 </section>
